@@ -3,6 +3,7 @@ import "h8k-components";
 
 import { image1, image2, image3, image4 } from "./assets/images";
 import { Thumbs, Viewer } from "./components";
+import useTimer from "./hooks/useTimer";
 
 const title = "Catalog Viewer";
 
@@ -27,48 +28,14 @@ function App() {
   ];
 
   const [catalogs] = useState([...catalogsList]);
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [slideTimer, setSlideTimer] = useState(null);
-  const [slideDuration] = useState(1000);
 
-  const mostrarAnterior = () => {
-    let idx = activeIndex;
-
-    if (idx === 0) idx = catalogs.length - 1;
-    else idx--;
-
-    setActiveIndex(idx);
-  };
-
-  const mostrarSiguiente = () => {
-    let idx = activeIndex;
-
-    if (idx === catalogs.length - 1) idx = 0;
-    else idx++;
-
-    setActiveIndex(idx);
-  };
-
-  const seleccionar = (idx) => {
-    setActiveIndex(idx);
-  };
-
-  const alternar = (e) => {
-    let idx = activeIndex;
-
-    if (e.target.checked) {
-      setSlideTimer(
-        setInterval(() => {
-          if (idx === catalogs.length - 1) idx = 0;
-          else idx++;
-
-          setActiveIndex(idx);
-        }, slideDuration)
-      );
-    } else {
-      clearInterval(slideTimer);
-    }
-  };
+  const {
+    alternar,
+    seleccionar,
+    mostrarAnterior,
+    mostrarSiguiente,
+    activeIndex,
+  } = useTimer(catalogs);
 
   return (
     <Fragment>
