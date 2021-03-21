@@ -1,25 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
+import useSlide from "../hooks/useSlide";
 
 function Slides({ slides }) {
-  const [activeIndex, setActiveIndex] = useState(0);
-
-  const mostrarAnterior = () => {
-    let idx = activeIndex;
-
-    if (idx === 0) return;
-    idx--;
-
-    setActiveIndex(idx);
-  };
-
-  const mostrarSiguiente = () => {
-    let idx = activeIndex;
-
-    if (idx === slides.length - 1) return;
-    idx++;
-
-    setActiveIndex(idx);
-  };
+  const { activeIndex, resetear, mostrarAnterior, mostrarSiguiente } = useSlide(
+    slides
+  );
 
   return (
     <div>
@@ -28,7 +13,7 @@ function Slides({ slides }) {
           data-testid="button-restart"
           className="small outlined"
           disabled={activeIndex === 0}
-          onClick={() => setActiveIndex(0)}
+          onClick={resetear}
         >
           Restart
         </button>
