@@ -1,38 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./App.css";
 import "h8k-components";
 
 import Articles from "./components/Articles";
+import useOrdenarArticulos from "./hooks/useOrdenarArticulos";
 
 const title = "Sorting Articles";
 
 function App({ articles }) {
-  const [articulos, setArticulos] = useState([]);
-
-  useEffect(() => {
-    setArticulos(articles);
-  }, [articles]);
-
-  const ordenarPorConMasVotos = async () => {
-    await setArticulos(null);
-    const a = articulos.sort((a, b) => {
-      if (a.upvotes < b.upvotes) return 1;
-      else if (a.upvotes > b.upvotes) return -1;
-      else return 0;
-    });
-
-    await setArticulos(a);
-  };
-
-  const ordenarPorFechaMasReciente = async () => {
-    await setArticulos(null);
-    const a = articulos.sort((a, b) => {
-      if (a.date < b.date) return 1;
-      else if (a.date > b.date) return -1;
-      else return 0;
-    });
-    await setArticulos(a);
-  };
+  const {
+    articulos,
+    ordenarPorConMasVotos,
+    ordenarPorFechaMasReciente,
+  } = useOrdenarArticulos(articles);
 
   return (
     <div className="App">
